@@ -549,12 +549,13 @@
 ;;>   corresponding output handler functions.
 (define* (display-object obj &optional [port (current-output-port)])
   (print-object obj #f port))
-(define* (write-object   obj &optional [port (current-output-port)])
+(define* (write-object obj &optional [port (current-output-port)])
   (print-object obj #t port))
 ;;>> (object->string obj [esc? = #t])
 ;;>   Convert the given `obj' to a string using its printed form.
 (define* (object->string obj &optional [esc? #t])
-  (with-output-to-string (thunk (write-object obj))))
+  (with-output-to-string
+    (thunk (print-object obj esc? (current-output-port)))))
 
 ;; Hack these to echo
 (*echo-display-handler* display-object)
