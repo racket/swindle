@@ -192,6 +192,7 @@
 (add-as-method <inexact>  <exact>   inexact->exact)
 (add-as-method <number>   <string>  number->string)
 (add-as-method <string>   <number>  string->number)
+(add-as-method <char>     <string>  string)
 (add-as-method <char>     <integer> char->integer)
 (add-as-method <integer>  <char>    integer->char)
 (add-as-method <string>   <list>    string->list)
