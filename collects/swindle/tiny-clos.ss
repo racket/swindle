@@ -224,17 +224,6 @@
 (define unspecified-initializer (lambda args ???))
 (define false-func (lambda args #f))
 
-;;>> (exn:fail:contract:type? x)
-;;>> (exn:fail:contract:type-object exn)
-;;>> (exn:fail:contract:type-class exn)
-;;>   A new exception that is used when Swindle detects a type error.  It
-;;>   has two fields (in addition to the fields of `exn:fail:contract')
-;;>   which store the invalid object and the expected class.
-(define-struct (exn:fail:contract:type exn:fail:contract) (object class))
-(provide exn:fail:contract:type?
-         exn:fail:contract:type-object
-         exn:fail:contract:type-class)
-
 ;; Basic allocation follows, all was in a single let, but this is not needed
 ;; with MzScheme's modules.  Also modified to use simple structs for
 ;; everything, including entities since PLT has applicable struct objects.
@@ -871,10 +860,10 @@
              (let loop ([args args] [specs specializers])
                (if (instance-of? (car args) (car specs))
                  (loop (cdr args) (cdr specs))
-                 (raise* make-exn:fail:contract:type
+                 (raise* make-exn:fail:contract
                          "method ~a: expects argument of type ~a; given ~e"
                          (%method-name method) (%class-name (car specs))
-                         (car args) (car args) (car specs))))]
+                         (car args))))]
             [else (proc *no-next-method* . args)]))))
 
 ;;>>... Generics in the instance initialization protocol
@@ -1596,11 +1585,10 @@
                                  (lambda (o n)
                                    (if (instance-of? n type)
                                      (%instance-set! o f n)
-                                     (raise* make-exn:fail:contract:type
+                                     (raise* make-exn:fail:contract
                                              "slot-set!: wrong type for slot ~
                                               ~e in ~e (~e not in ~e)"
-                                             (car slot) class n type
-                                             (car slot) type)))
+                                             (car slot) class n type)))
                                  (lambda (o n) (%instance-set! o f n))))])
                (when lock
                  (make-setter-locked! g+s lock
@@ -1635,10 +1623,10 @@
                                  (lambda (o n)
                                    (if (and type (not (instance-of? n type)))
                                      (raise*
-                                      make-exn:fail:contract:type
+                                      make-exn:fail:contract
                                       "slot-set!: wrong type for shared slot ~
                                        ~e in ~e (~e not in ~e)"
-                                      (car slot) class n type (car slot) type)
+                                      (car slot) class n type)
                                      (set! cell n))))])
                  (when lock
                    (make-setter-locked! (car slot) g+s lock
