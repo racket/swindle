@@ -1,14 +1,12 @@
 ====< Swindle >=========================================================
 
-This is Swindle, written by Eli Barzilay (eli@barzilay.org)
+This is the Swindle Reference Manual.
 
-Swindle is a collection of modules that extend PLT Scheme
-(www.plt-scheme.org) with many additional features.  The main feature
-which started this project is a CLOS-like object system based on
-Tiny-CLOS from Xerox, but there is a lot more -- see the feature list
-below for a rough picture.  The latest version of Swindle is available
-at http://www.barzilay.org/Swindle/.  There is also a low volume mailing
-list, mail me to register.  Comments, bugs, or whatever are welcome.
+Swindle is a collection of modules that extend PLT Scheme with many
+additional features.  The main feature which started this project is a
+CLOS-like object system based on Tiny-CLOS from Xerox, but there is a
+lot more -- see the feature list below for a rough picture.  Swindle is
+now part of PLT Scheme.
 
 
 ====< Feature List >====================================================
@@ -21,30 +19,25 @@ only a subset of the system is needed.
   improved `define' and `let' forms.  (Available separately using
   "base.ss".)
 
-* Generic setters with `set!', more useful side effect forms: `pset!',
-  `shift!', `rotate!', and some simple ones like `inc!', and `push!'.
-  (Available separately using "setf.ss", where the names `setf!' and
-  `psetf!' are used to avoid changing the Scheme form.)
-
-* Convenient syntax for `provide' forms.  ("misc.ss")
+* Generic setters with `set!', additional useful mutation forms:
+  `pset!', `shift!', `rotate!', and some simple ones like `inc!', and
+  `push!'.  (Available separately using "setf.ss", where the names
+  `setf!' and `psetf!' are used to avoid changing the Scheme form.)
 
 * Easy macro-defining macros -- simple syntax-rules macros with
   `defsubst', and a generic `defmacro' utility, all with a local
   `let...' form, and extended to easily create symbol macros.
   ("misc.ss")
 
-* An `collect' macro that provides very sophisticated list
-  comprehensions and much more.  ("misc.ss")
+* A `collect' macro that provides very sophisticated list comprehensions
+  and much more.  ("misc.ss")
 
 * An `echo' mechanism which is an alternative to using format strings,
   and contains many useful features including a list iteration
-  construct, and easy to extend.  ("misc.ss")
+  construct, and is easy to extend.  ("misc.ss")
 
-* A `regexper' syntax which is similar to a `case' on strings with easy
-  access to submatches.  ("misc.ss")
-
-* A hash table that is suitable for memoization (works on identities of
-  elements of a list).  ("misc.ss")
+* A `regexp-case' syntax which is similar to a `case' on strings with
+  easy access to submatches.  ("misc.ss")
 
 * A CLOS-like object system -- based on Tiny CLOS, but with many
   extensions that bring it much closer to CLOS, and heavily optimized.
@@ -74,34 +67,17 @@ only a subset of the system is needed.
 * A language that can easily create HTML, where the result is
   human-editable.  ("html.ss")
 
-* Plays well with DrScheme.  ("tool.ss")
-
-* Some customizable syntax features.  ("custom.ss")
-
-* Easy to add customized languages to DrScheme.  ("custom.ss")
+* Customizable syntax: easy to add customized languages to DrScheme.
+  ("custom.ss")
 
 
-====< Source Files >====================================================
+====< Reference Manual >================================================
 
-A list of files in this distribution follows.  Files marked with
-"module" provide a module by the same name, files marked with "language
-module" modify the language and should be used as an initial import for
-other modules.  Most files (and especially all language modules) are
-useful by themselves, even without using the whole Swindle environment.
-The documentation file ("doc.txt") contains more explanations on all
-Scheme files in a Help-Desk usable format, and the same information is
-layed out better in the HTML documentation pages below.
-
-* readme.txt
-  This file.
-
-* version.txt
-  A file that contains the version of this Swindle distribution, and the
-  PLT version it was compiled for.
-
-* doc.txt
-  Descriptions of user-level functions, macros, generic functions and
-  variables, in a format that help-desk can use.
+Files marked with "module" provide a module by the same name, files
+marked with "language module" modify the language and should be used as
+an initial import for other modules.  Most files (and especially all
+language modules) are useful by themselves, even without using the whole
+Swindle environment.
 
 * base.ss (language module)
   Basic syntax extensions, mainly Lisp-like lambda argument &-keywords.
@@ -133,12 +109,6 @@ layed out better in the HTML documentation pages below.
   The main Swindle environment module: packages `tiny-clos', `clos', and
   `extra' on top of `turbo', and some more general definitions.
 
-* html.ss (module)
-  A language for creating HTML.
-
-* html-doc.txt
-  Documentation file for "html.ss".
-
 * info.ss (module)
   Compilation definitions.
 
@@ -153,12 +123,16 @@ layed out better in the HTML documentation pages below.
   A sample file that demonstrates how to create a Swindle-based
   customized language -- see the source for instructions.
 
-* swindle.el
-  Emacs Lisp file defining a mode for Swindle files (can also be used
-  for generic MzScheme code).
+* html.ss (module)
+  A language for creating HTML.
 
-* icons (directory)
-  Swindle icons etc.
+* html-doc.txt
+  Documentation file for "html.ss".
+
+* doc.txt
+  Descriptions of user-level functions, macros, generic functions and
+  variables, in a format that help-desk can use.  (Not included, an HTML
+  manual is created instead.)
 
 * copying.txt
   Full copyright text (LGPL).
@@ -166,7 +140,7 @@ layed out better in the HTML documentation pages below.
 
 ====< Copyright Notice >================================================
 
-Copyright (C) 2002 Eli Barzilay (eli@barzilay.org)
+Copyright (C) 2004 Eli Barzilay (eli@barzilay.org)
 
     This library is free software; you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as

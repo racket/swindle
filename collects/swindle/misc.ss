@@ -1849,7 +1849,7 @@
 (defsubst* (no-errors* body ...)
   (with-handlers ([void identity]) body ...))
 
-;;>> (regexper string clause ...)
+;;>> (regexp-case string clause ...)
 ;;>   Try to match the given `string' against several regexps.  Each clause
 ;;>   has one of the following forms:
 ;;>   * (re => function): if `string' matches `re', apply `function' on the
@@ -1862,7 +1862,7 @@
 ;;>     match results are available.
 ;;>   * (else body ...): should be the last clause which is evaluated if all
 ;;>     previous cases failed.
-(defsyntax* (regexper stx)
+(defsyntax* (regexp-case stx)
   (define (do-clause c)
     (syntax-case c (else =>)
       [(else body ...) c]
