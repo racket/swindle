@@ -469,7 +469,7 @@
 ;;>>... Utilities
 
 ;;>> (eprintf fmt-string args ...)
-;;>   Same as `printf' but it uses the current-error-port.
+;;>   Same as `printf' but it uses `current-error-port'.
 (define* (eprintf . args)
   (apply fprintf (current-error-port) args))
 
