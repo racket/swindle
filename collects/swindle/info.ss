@@ -32,8 +32,8 @@
   ;;     "http://www.barzilay.org/Swindle/"
   ;;     "http://www.barzilay.org/Swindle/"))
   ;;
- ; (define tools      '(("tool.ss")))
- ; (define tool-names '("Swindle"))
- ; (define tool-icons '(("swindle-icon.png" "swindle")))
- ; (define tool-urls  '("http://www.barzilay.org/Swindle/"))
+  (define tools      '(("tool.ss")))
+  (define tool-names '("Swindle"))
+  (define tool-icons '(("swindle-icon.png" "swindle")))
+  (define tool-urls  '("http://www.barzilay.org/Swindle/"))
   )

@@ -28,8 +28,8 @@
                    (define/public (get-one-line-summary) l-one-line)
                    (define/public (get-language-url) l-url)
                    (define/public (get-reader)
-                     (lambda (name port offsets)
-                       (let ([v (read-syntax name port offsets)])
+                     (lambda (src port)
+                       (let ([v (read-syntax src port)])
                          (if (eof-object? v)
                            v
                            (namespace-syntax-introduce v)))))
@@ -108,8 +108,7 @@
                         [(none) 0]
                         [(debug) 1]
                         [(debug/profile) 2]))])))
-          (define/override (render-value/format
-                            value settings port put-snip width)
+          (define/override (render-value/format value settings port port-write)
             (parameterize ([current-output-port port]
                            [current-inspector (make-inspector)])
               ((current-print) value)))
@@ -163,5 +162,5 @@
                         (unless url (set! url swindle-url))
                         (add-swindle-language
                          name file dname one-line #f url))))))))
-          (for-each do-customize (directory-list))))
+          (for-each do-customize (map path->string (directory-list)))))
       )))

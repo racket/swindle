@@ -130,9 +130,10 @@
     (let loop ([fmt-args '()] [args args] [a fmt-num])
       (if (zero? a)
         (raise (exn-maker
-                (if sym
-                  (apply format (concat "~s: " fmt) sym (reverse! fmt-args))
-                  (apply format fmt (reverse! fmt-args)))
+                (string->immutable-string
+                 (if sym
+                   (apply format (concat "~s: " fmt) sym (reverse! fmt-args))
+                   (apply format fmt (reverse! fmt-args))))
                 (current-continuation-marks) . args))
         (loop (cons (car args) fmt-args) (cdr args) (sub1 a))))))
 
@@ -222,6 +223,17 @@
 (define* ??? (letrec ([x x]) x)) ; this is MzScheme's #<undefined> value
 (define unspecified-initializer (lambda args ???))
 (define false-func (lambda args #f))
+
+;;>> (exn:fail:contract:type? x)
+;;>> (exn:fail:contract:type-object exn)
+;;>> (exn:fail:contract:type-class exn)
+;;>   A new exception that is used when Swindle detects a type error.  It
+;;>   has two fields (in addition to the fields of `exn:fail:contract')
+;;>   which store the invalid object and the expected class.
+(define-struct (exn:fail:contract:type exn:fail:contract) (object class))
+(provide exn:fail:contract:type?
+         exn:fail:contract:type-object
+         exn:fail:contract:type-class)
 
 ;; Basic allocation follows, all was in a single let, but this is not needed
 ;; with MzScheme's modules.  Also modified to use simple structs for
@@ -437,9 +449,8 @@
                       ;;   getters-n-setters-for-class
                       ;;   (%class-getters-n-setters class))
                       (%class-getters-n-setters class))
-                (raise* make-exn:application:mismatch
-                        "slot-ref: no slot `~e' in ~e" slot-name class
-                        slot-name))))
+                (raise* make-exn:fail:contract
+                        "slot-ref: no slot `~e' in ~e" slot-name class))))
 
 ;;; These are for optimizations - works only for single inheritance!
 (define (%slot-getter class slot-name)
@@ -782,8 +793,8 @@
 (dolist [slot '(specializers procedure qualifier)]
   (make-setter-locked! (lookup-slot-info <method> slot cdr) #t
     (lambda ()
-      (raise* make-exn:application:mismatch
-              "slot-set!: slot `~e' in <method> is locked" slot slot))))
+      (raise* make-exn:fail:contract
+              "slot-set!: slot `~e' in <method> is locked" slot))))
 
 ;;>>...
 ;;> *** Convenience functions
@@ -850,18 +861,17 @@
     (lambda args
       (cond [(if exact?
                (not (= (length args) required)) (< (length args) required))
-             (raise* make-exn:application:arity
+             (raise* make-exn:fail:contract:arity
                      "method ~a: expects ~a~e argument~a, given ~e~a"
                      (%method-name method)
                      (if exact? "" "at least ") required
                      (if (= 1 required) "" "s") (length args)
-                     (if (null? args) "" (format ": ~e" args))
-                     (length args) arity)]
+                     (if (null? args) "" (format ": ~e" args)))]
             [(not (every instance-of? args specializers))
              (let loop ([args args] [specs specializers])
                (if (instance-of? (car args) (car specs))
                  (loop (cdr args) (cdr specs))
-                 (raise* make-exn:application:type
+                 (raise* make-exn:fail:contract:type
                          "method ~a: expects argument of type ~a; given ~e"
                          (%method-name method) (%class-name (car specs))
                          (car args) (car args) (car specs))))]
@@ -1089,13 +1099,12 @@
                       [else (< (length args) (arity-at-least-value arity))])
             (let ([least (and (arity-at-least? arity)
                               (arity-at-least-value arity))])
-              (raise* make-exn:application:arity
+              (raise* make-exn:fail:contract:arity
                       "generic ~a: expects ~a~e argument~a, given ~e~a"
                       (%generic-name generic)
                       (if least "at least " "") (or least arity)
                       (if (= 1 (or least arity)) "" "s") (length args)
-                      (if (null? args) "" (format ": ~e" args))
-                      (length args) arity)))
+                      (if (null? args) "" (format ": ~e" args)))))
           (when (or (eq? app-cache ???)
                     (not (eq? (car app-cache) *generic-app-cache-tag*)))
             (set! app-cache (cons *generic-app-cache-tag*
@@ -1479,9 +1488,9 @@
       (%set-generic-combination! generic (getarg initargs :combination))
       (set-instance-proc!    generic
                              (lambda args
-                               (raise* make-exn:application:mismatch
+                               (raise* make-exn:fail:contract
                                        "~s: no methods added yet"
-                                       (%generic-name generic) generic))))))
+                                       (%generic-name generic)))))))
 
 (add-method initialize
   (make-method (list <method>)
@@ -1587,7 +1596,7 @@
                                  (lambda (o n)
                                    (if (instance-of? n type)
                                      (%instance-set! o f n)
-                                     (raise* make-exn:application:type
+                                     (raise* make-exn:fail:contract:type
                                              "slot-set!: wrong type for slot ~
                                               ~e in ~e (~e not in ~e)"
                                              (car slot) class n type
@@ -1596,9 +1605,9 @@
                (when lock
                  (make-setter-locked! g+s lock
                    (lambda ()
-                     (raise* make-exn:application:mismatch
+                     (raise* make-exn:fail:contract
                              "slot-set!: slot `~e' in ~e is locked"
-                             (car slot) (%class-name class) (car slot)))))
+                             (car slot) (%class-name class)))))
                g+s)]
             [(:class)
              (unless (null? initargs)
@@ -1626,7 +1635,7 @@
                                  (lambda (o n)
                                    (if (and type (not (instance-of? n type)))
                                      (raise*
-                                      make-exn:application:type
+                                      make-exn:fail:contract:type
                                       "slot-set!: wrong type for shared slot ~
                                        ~e in ~e (~e not in ~e)"
                                       (car slot) class n type (car slot) type)
@@ -1634,9 +1643,9 @@
                  (when lock
                    (make-setter-locked! (car slot) g+s lock
                      (lambda ()
-                       (raise* make-exn:application:mismatch
+                       (raise* make-exn:fail:contract
                                "slot-set!: slot `~e' in ~e is locked"
-                               (car slot) (%class-name class) (car slot)))))
+                               (car slot) (%class-name class)))))
                  g+s)
                ;; the slot was inherited as :class - fetch its getters/setters
                (let loop ([cpl (cdr (%class-cpl class))])
@@ -1655,26 +1664,26 @@
 (add-method no-next-method
   (make-method (list <generic> <method>)
     (lambda (call-next-method generic method . args)
-      (raise* make-exn:application:mismatch
+      (raise* make-exn:fail:contract
               (concat "~s: no applicable next method to call"
                       (case (%method-qualifier method)
                         [(:before) " in a `before' method"]
                         [(:before) " in an `after' method"]
                         [else ""]))
-              (%generic-name generic) generic))))
+              (%generic-name generic)))))
 (add-method no-next-method
   (make-method (list (singleton #f) <method>)
     (lambda (call-next-method generic method . args)
-      (raise* make-exn:application:mismatch
+      (raise* make-exn:fail:contract
               "~s: no applicable next method when calling a method directly"
-              (%method-name method) method))))
+              (%method-name method)))))
 
 (add-method no-applicable-method
   (make-method (list <generic>)
     (lambda (call-next-method generic . args)
-      (raise* make-exn:application:mismatch
+      (raise* make-exn:fail:contract
               "~s: no applicable primary methods for argument types ~e"
-              (%generic-name generic) (map class-of args) generic))))
+              (%generic-name generic) (map class-of args)))))
 
 ;;; ---------------------------------------------------------------------------
 ;;; Customization variables
