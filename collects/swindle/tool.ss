@@ -20,7 +20,7 @@
                 (drscheme:language:simple-module-based-language->module-based-language-mixin
                  (class* object%
                          (drscheme:language:simple-module-based-language<%>)
-                   (define/public (get-language-numbers) '(-1000 0 0))
+                   (define/public (get-language-numbers) '(-1000 2000 0))
                    (define/public (get-language-position)
                      (list (string-constant professional-languages)
                            "Swindle" l-entry-name))
@@ -38,10 +38,6 @@
             (drscheme:language:make-simple-settings
              l-sensitive? 'current-print 'mixed-fraction-e #f #t 'debug))
           (define/override (get-language-name) l-name)
-          (define swindle-delta (make-object style-delta%))
-          (send swindle-delta
-                set-delta-background (make-object color% 255 255 128))
-          (define/override (get-style-delta) swindle-delta)
           (define/override (config-panel parent)
             (let* ([make-panel
                     (lambda (msg contents)
@@ -129,13 +125,15 @@
       (define phase1 void)
       (define (phase2)
         (for-each (lambda (args)
-                    (apply add-swindle-language `(,@args ,swindle-url)))
+                    (apply add-swindle-language `(,@args #f)))
                   '(("Swindle" "swindle" "Full Swindle"
-                     "Full Swindle extensions" #f)
+                     "Full Swindle extensions" #t)
                     ("Swindle w/o CLOS" "turbo" "Swindle without CLOS"
-                     "Basic Swindle: no object system" #f)
+                     "Swindle without the object system" #t)
+                    ("Swindle w/o CLOS" "turbo" "Basic syntax only"
+                     "Basic Swindle syntax: keyword-arguments etc" #t)
                     ("HTML Swindle" "html" "HTML Swindle"
-                     "Basic Swindle and HTML extensions" #t)))
+                     "Swindle's HTML extension" #t)))
         (parameterize ([current-directory (collection-path "swindle")])
           (define (do-customize file)
             (when (regexp-match #rx"\\.ss$" file)
