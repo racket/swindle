@@ -129,7 +129,7 @@
                      "Full Swindle extensions" #t)
                     ("Swindle w/o CLOS" "turbo" "Swindle without CLOS"
                      "Swindle without the object system" #t)
-                    ("Swindle w/o CLOS" "turbo" "Basic syntax only"
+                    ("Swindle Syntax" "base" "Basic syntax only"
                      "Basic Swindle syntax: keyword-arguments etc" #t)
                     ("HTML Swindle" "html" "HTML Swindle"
                      "Swindle's HTML extension" #t)))
