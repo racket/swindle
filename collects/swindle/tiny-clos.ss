@@ -233,7 +233,7 @@
 
 (define-values (struct:instance make-instance instance? inst-ref inst-set!)
   ;; slots: applicable, class, function, slots-vector
-  (make-struct-type 'swindleobj #f 3 0 #f '() #f
+  (make-struct-type 'swindleobj #f 3 0 #f '() (current-inspector)
                     (lambda (o . args) (apply (instance-proc o) args))))
 (defsubst (instance-class x) (inst-ref x 0))
 (defsubst (instance-proc  x) (inst-ref x 1))
