@@ -1670,7 +1670,7 @@
                  (%set-class-initializers!
                   class
                   (cons (lambda args
-                          (let ([result (l-getarg args initargs nothing)])
+                          (let ([result (l-getarg args initargs)])
                             ;; cache the setter
                             (unless setter
                               (set! setter
