@@ -87,11 +87,19 @@
   ;;    #`(define~ name (lambda~ (arg ...) body ...))]
   ;;   [(_ name body ...) #'(define name body ...)])
   ;; this version makes created closures have meaningful names
+  ;; also -- if the syntax is top-level, then translate all defines into a
+  ;;   define with (void) followed by a set! -- this is for the problem of
+  ;;   defining something that is provided by some module
   (syntax-case stx (values)
     [(_ name expr) (identifier? #'name)
-     #'(define-values (name) expr)]
+     (if (eq? 'top-level (syntax-local-context))
+       #'(begin (define-values (name) (void)) (set! name expr))
+       #'(define-values (name) expr))]
     [(_ (values name ...) expr)
-     #'(define-values (name ...) expr)]
+     (if (eq? 'top-level (syntax-local-context))
+       #'(begin (define name (void)) ...
+                (set!-values (name ...) expr))
+       #'(define-values (name ...) expr))]
     [(_ names body0 body ...) (pair? (syntax-e #'names))
      (let loop ([s #'names] [args '()])
        (syntax-case s ()
@@ -102,8 +110,12 @@
                        [as   (reverse (cdr args))]
                        [body #'(begin body0 body ...)])
               (if (zero? i)
-                (quasisyntax/loc stx
-                  (define name (lambda~ #,(car args) #,body)))
+                (if (eq? 'top-level (syntax-local-context))
+                  (quasisyntax/loc stx
+                    (begin (define name (void))
+                           (set! name (lambda~ #,(car args) #,body))))
+                  (quasisyntax/loc stx
+                    (define name (lambda~ #,(car args) #,body))))
                 (loop (sub1 i) (cdr as)
                       (syntax-property
                        (quasisyntax/loc stx (lambda~ #,(car as) #,body))
