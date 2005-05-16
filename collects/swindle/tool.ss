@@ -34,6 +34,7 @@
                            v
                            (namespace-syntax-introduce v)))))
                    (super-instantiate ()))))
+          (define/override (use-namespace-require/copy?) #t)
           (define/override (default-settings)
             (drscheme:language:make-simple-settings
              l-sensitive? 'current-print 'mixed-fraction-e #f #t 'debug))
