@@ -11,7 +11,8 @@
   ;; Can't use these since the startup parameters are hard-wired
   (define mzscheme-launcher-names '("swindle"))
   (define mzscheme-launcher-flags
-    '(("-me" "(namespace-require/copy '(lib \"swindle.ss\" \"swindle\"))")))
+    '(("-me"
+       "(namespace-require/copy (quote (lib \"swindle.ss\" \"swindle\")))")))
   ;;
   ;; This simple interface is not enough, use tool.ss instead
   ;; (define drscheme-language-modules
