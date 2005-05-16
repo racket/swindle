@@ -89,7 +89,8 @@
   ;; this version makes created closures have meaningful names
   ;; also -- if the syntax is top-level, then translate all defines into a
   ;;   define with (void) followed by a set! -- this is for the problem of
-  ;;   defining something that is provided by some module
+  ;;   defining something that is provided by some module, and re-binding a
+  ;;   syntax
   (syntax-case stx (values)
     [(_ name expr) (identifier? #'name)
      (if (eq? 'top-level (syntax-local-context))
