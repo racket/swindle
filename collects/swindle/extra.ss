@@ -487,9 +487,9 @@
               (orig-display-handler ")" port)]))
 
 ;;>> (name-sans-<> name)
-;;>  Given a string or symbol for name, return a string where the outermost
-;;>  set of angle brackets have been stripped if they are present.
-;;>  This is handy if you are writing your own print-object methods.
+;;>   Given a string or symbol for name, return a string where the outermost
+;;>   set of angle brackets have been stripped if they are present.  This is
+;;>   handy if you are writing your own print-object methods.
 (define <>-re #rx"^<(.*)>$")
 (define* (name-sans-<> name)
   (cond [(string? name) (regexp-replace <>-re name "\\1")]
