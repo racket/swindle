@@ -9,6 +9,7 @@ and
   https://github.com/racket/racket/blob/master/racket/src/LICENSE-MIT.txt
 for the full text of the licenses.
 
-This repository incorporates code from Tiny CLOS which is copyright
-Xerox. See the file tiny-clos.rkt for the license, which is similar to
+This repository incorporates code from Tiny CLOS, which is copyright
+Xerox and released under a variant of the Xerox License. See the file
+tiny-clos.rkt for the full text of the license, which is similar to
 the MIT License.
