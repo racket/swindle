@@ -46,3 +46,9 @@
 (define pkg-desc "The implementation of the Swindle language")
 
 (define pkg-authors '(eli))
+
+(define license
+  ;; TODO: Update this if https://github.com/spdx/license-list-XML/pull/1346
+  ;; concludes that the Tiny CLOS license should be assigned a different
+  ;; license rather than Xerox.
+  '(Xerox AND (Apache-2.0 OR MIT)))
