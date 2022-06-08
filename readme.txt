@@ -2,11 +2,11 @@
 
 This is the Swindle Reference Manual.
 
-Swindle is a collection of modules that extend PLT Scheme with many
+Swindle is a collection of modules that extend Racket with many
 additional features.  The main feature which started this project is a
 CLOS-like object system based on Tiny-CLOS from Xerox, but there is a
 lot more -- see the feature list below for a rough picture.  Swindle is
-now part of PLT Scheme.
+now part of the main Racket distribution.
 
 
 ====< Feature List >====================================================
@@ -131,27 +131,28 @@ Swindle environment.
   variables, in a format that help-desk can use.  (Not included, an HTML
   manual is created instead.)
 
-* copying.txt
-  Full copyright text (LGPL).
-
 
 ====< Copyright Notice >================================================
 
 Copyright (C) 1998-2014 Eli Barzilay (eli@barzilay.org)
 
-    This library is free software; you can redistribute it and/or modify
-    it under the terms of the GNU Lesser General Public License as
-    published by the Free Software Foundation; either version 2.1 of the
-    License, or (at your option) any later version.
+Swindle, including this document, is dual-licensed under the under the
+Apache License, version 2.0, and the MIT license, at your option.  See
+the files:
+  https://github.com/racket/racket/blob/master/racket/src/LICENSE-APACHE.txt
+and
+  https://github.com/racket/racket/blob/master/racket/src/LICENSE-MIT.txt
+for the full text of the licenses.
 
-    This library is distributed in the hope that it will be useful, but
-    WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Lesser General Public License for more details.
+Swindle incorporates code from Tiny CLOS, which is copyright Xerox and
+released under a variant of the Xerox License.  See the file
+`tiny-clos.rkt' for the full text of the license, which is similar to
+the MIT License.
 
-    You should have received a copy of the GNU Lesser General Public
-    License along with this library; if not, write to the Free Software
-    Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
-    02110-1301 USA.
+Unless required by applicable law or agreed to in writing, software
+distributed under these licenses is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the licenses for the specific language governing permissions and
+limitations under each license.
 
 ====< * >===============================================================
