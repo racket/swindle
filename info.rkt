@@ -31,7 +31,7 @@
 (define tools      '(("tool.rkt")))
 (define tool-names '("Swindle"))
 (define tool-icons '(("swindle-icon.png" "swindle")))
-(define tool-urls  '("http://www.barzilay.org/Swindle/"))
+(define tool-urls  '("https://docs.racket-lang.org/swindle/index.html"))
 (define deps '("scheme-lib"
                "base"
                "compatibility-lib"
