@@ -10,7 +10,7 @@ feature that started this project is a CLOS-like object system based
 on Tiny-CLOS from Xerox, but there is a lot more.
 
 Some documentation is available at
-@link["http://barzilay.org/Swindle/"]{http://barzilay.org/Swindle/}.
+@link["http://old.barzilay.org/Swindle/"]{http://old.barzilay.org/Swindle/}.
 
 @; @table-of-contents[]
 
