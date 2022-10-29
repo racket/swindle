@@ -24,14 +24,14 @@
 ;;     "Scheme with Swindle without the object system"
 ;;     "Scheme with the HTML and Swindle extensions"))
 ;; (define drscheme-language-urls
-;;   '("http://www.barzilay.org/Swindle/"
-;;     "http://www.barzilay.org/Swindle/"
-;;     "http://www.barzilay.org/Swindle/"))
+;;   '("https://docs.racket-lang.org/swindle/"
+;;     "https://docs.racket-lang.org/swindle/"
+;;     "https://docs.racket-lang.org/swindle/"))
 
 (define tools      '(("tool.rkt")))
 (define tool-names '("Swindle"))
 (define tool-icons '(("swindle-icon.png" "swindle")))
-(define tool-urls  '("https://docs.racket-lang.org/swindle/index.html"))
+(define tool-urls  '("https://docs.racket-lang.org/swindle/"))
 (define deps '("scheme-lib"
                "base"
                "compatibility-lib"
