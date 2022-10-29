@@ -6,7 +6,7 @@
 (define mzscheme-launcher-names '("swindle"))
 (define mzscheme-launcher-flags '(("-li" "swindle")))
 
-(define scribblings '(("swindle.scrbl" ())))
+(define scribblings '(("swindle.scrbl" (language))))
 
 ;; This simple interface is not enough, use tool.rkt instead
 ;; (define drscheme-language-modules
