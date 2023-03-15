@@ -6,7 +6,7 @@
 (define mzscheme-launcher-names '("swindle"))
 (define mzscheme-launcher-flags '(("-li" "swindle")))
 
-(define scribblings '(("swindle.scrbl" ())))
+(define scribblings '(("swindle.scrbl" (language))))
 
 ;; This simple interface is not enough, use tool.rkt instead
 ;; (define drscheme-language-modules
@@ -24,14 +24,14 @@
 ;;     "Scheme with Swindle without the object system"
 ;;     "Scheme with the HTML and Swindle extensions"))
 ;; (define drscheme-language-urls
-;;   '("http://www.barzilay.org/Swindle/"
-;;     "http://www.barzilay.org/Swindle/"
-;;     "http://www.barzilay.org/Swindle/"))
+;;   '("https://docs.racket-lang.org/swindle/"
+;;     "https://docs.racket-lang.org/swindle/"
+;;     "https://docs.racket-lang.org/swindle/"))
 
 (define tools      '(("tool.rkt")))
 (define tool-names '("Swindle"))
 (define tool-icons '(("swindle-icon.png" "swindle")))
-(define tool-urls  '("http://www.barzilay.org/Swindle/"))
+(define tool-urls  '("https://docs.racket-lang.org/swindle/"))
 (define deps '("scheme-lib"
                "base"
                "compatibility-lib"
